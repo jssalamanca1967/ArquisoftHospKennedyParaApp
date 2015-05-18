@@ -1,0 +1,48 @@
+<nav class="panel panel-default" id="detalles">
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Detalles del reporte</h2>
+                <hr class="star-light">
+            </div>
+        </div>
+        <h2 class="form-title"></h2>
+        <div class="panel panel-default" >
+            <!-- Default panel contents -->
+            <div class="panel-heading"></div>
+            <!-- Table -->
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Actividad fisica: {{getReportes.reporte}}</td>
+                        <td>{{getReportes.reporte.actividadFisica}}</td>
+                    </tr>
+                    <tr>
+                        <td>Alimentación: </td>
+                        <td>{{getReportes.reporte.alimentacion}}</td>
+                    </tr>
+                    <tr>
+                        <td>Gravedad: </td>
+                        <td>{{getReportes.reporte.gravedad}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha creacion: </td>
+                        <td>{{getReportes.reporte.fechaCreacion}}</td>
+                    </tr>
+                    <tr>
+                        <td>localización del dolor: </td>
+                        <td>{{getReportes.reporte.localizacionDolor}}</td>
+                    </tr>
+                    <tr>
+                        <td>Patron de sueño: </td>
+                        <td>{{getReportes.reporte.patronSuenio}}</td>
+                    </tr>
+                    <tr>
+                        <td>Medicamentos Recientes: </td>
+                        <td>{{getReportes.reporte.medicamentosRecientes}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div>
+</nav>

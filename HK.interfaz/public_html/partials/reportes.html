@@ -1,0 +1,80 @@
+<nav class="panel panel-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Reportes</h2>
+                <hr class="star-primary">
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-offset-2">
+            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+            <form name="idPaciente" method="get" id="contactForm" novalidate>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <label>Identificación del Paciente</label>
+                        <input type="text" class="form-control" placeholder="idPaciente" id="idPaciente" required data-validation-required-message="Por favor ingrese una Identificacación de un Paciente" ng-model='idActual'>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <br>
+                <div id="success"></div>
+                <div class="row">
+                    <div class="form-group col-xs-12" ng-click="getReportes.darReportesDeId(idActual)">
+                        <button type="submit" class="btn btn-success btn-lg" >Buscar Reportes del Paciente</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-if="toolbar.isSelected(4)">
+            <nuevo-reporte></nuevo-reporte>
+        </div>
+    </div>
+    <div class="container" >
+        <h2 class="form-title">Reportes del Paciente</h2>
+        <div class="panel panel-default" >
+            <!-- Default panel contents -->
+            <!-- Table -->
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Identificación</th>
+                        <th>Gravedad</th>
+                        <th>Fecha de Creación</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+
+                <tbody >
+                    <tr ng-repeat="reporte in getReportes.reportesPacientes | orderBy: 'id'">
+                        <td>{{reporte.id}}</td>
+                        <td>{{reporte.gravedad}}</td>
+                        <td>{{reporte.fechaCreacion}}</td>
+                        <td>
+                            <div ng-click="toolbar.selectTab(6)">
+                                <a href="#reportes" ng-click="getReportes.darDetalles(idActual, reporte.id)">Ver</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <form >
+                <table>
+                    <tr>    
+                        <td><label>Fecha inicial:   </label></td>
+                        <td><input type="text" name="fecha1" ng-model="fecha1" placeholder="YYYY-MM-DD" /></td> 
+                    </tr>
+                    <tr>    
+                        <td><label>Fecha final:  </label></td>
+                        <td><input type="text" name="fecha2" ng-model="fecha2" placeholder="YYYY-MM-DD" /></td>
+                    </tr>
+                </table>
+                <div>    
+                    <button ng-click="detallesReporte.darReportesEntreFechas(id, fecha1, fecha2)" class="btn btn-success btn-lg">Buscar los reportes entre las fechas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

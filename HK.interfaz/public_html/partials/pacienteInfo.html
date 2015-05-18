@@ -1,0 +1,38 @@
+<nav class="panel panel-default">
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Pacientes</h2>
+                <hr class="star-light">
+            </div>
+        </div>
+        <h2 class="form-title">Lista de los pacientes</h2>
+        <div class="panel panel-default" >
+            <!-- Default panel contents -->
+            <div class="panel-heading"></div>
+            <!-- Table -->
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Doc. Identificación</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Altura</th>
+                        <th>Reportes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <! tr ng-repeat="paciente in self.getPacientes.pacientes | orderBy: 'id'">
+                    <tr ng-repeat="paciente in getPacientes.pacientes| orderBy: 'id'" href="index.html" >
+                        <td>{{paciente.id}}</td>
+                        <td>{{paciente.nombre}}</td>
+                        <td>{{paciente.edad}}</td>
+                        <td>{{paciente.altura}}</td>
+                        <td><div ng-init="paci = paciente.id" ><li class="page-scroll" ng-click="toolbar.selectTab(3)"><a href="#reportes" ng-click="getReportes.darReportesDeId(paciente.id)"  >Ver</a></li></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div>
+</nav>
