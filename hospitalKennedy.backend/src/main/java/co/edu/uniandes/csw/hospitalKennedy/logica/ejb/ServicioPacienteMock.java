@@ -40,7 +40,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     //@EJB
     //public static IServicioPersistenciaMockLocal persistencia;
     @PersistenceUnit(unitName = "HospitalKennedyPU")
-            EntityManager entityManager;
+    private EntityManager entityManager;
     
     public ServicioPacienteMock()
     {
@@ -255,7 +255,7 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
     // Método para la app
     //-----------------------------------------------
     
-    public PacienteDTO darPacientePorNombre(PacienteDTO paciente){
+    public Paciente darPacientePorNombre(Paciente paciente){
         
         Query q = entityManager.createQuery("select u from paciente u where u.nombre = '" + paciente.getNombre() + "'");
         
@@ -263,9 +263,9 @@ public class ServicioPacienteMock implements IServicioPacienteMock {
         
         Paciente p = pacientes.get(0);
         
-        PacienteDTO rta = new PacienteDTO();
+        Paciente rta = new Paciente();
         
-        rta.setCedulaCiudadania(p.getId());
+        rta.setId(p.getId());
         
         return rta;
         

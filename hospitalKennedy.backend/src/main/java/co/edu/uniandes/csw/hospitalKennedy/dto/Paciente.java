@@ -55,12 +55,17 @@ public class Paciente implements Serializable {
     
     private int altura;
     private int edad;
+    
+    private String password;
+    private String grupo;
+    private String token;
+    
     //private Long cedulaCiudadania;
     @NotNull
     private String nombre;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Reporte> reportes;
+    public List<Reporte> reportes;
 
     @NotNull
     @Column(name = "create_at", updatable = false)
@@ -181,10 +186,38 @@ public class Paciente implements Serializable {
         return nombre;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }    
+
     public void agregarReporte(Reporte reporte) {
         reporte.setId(Long.parseLong(id + "" + reportes.size()));
         reporte.setFechaCreacion((new Date(System.currentTimeMillis())).toString());
         reportes.add(reporte);
+    }
+    
+    public String toString(){
+        return id + " - " + nombre + " - " + password + " - " + token;
     }
 
 }

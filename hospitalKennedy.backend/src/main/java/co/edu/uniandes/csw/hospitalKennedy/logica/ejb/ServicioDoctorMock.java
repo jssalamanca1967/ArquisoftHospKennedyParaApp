@@ -77,7 +77,7 @@ public class ServicioDoctorMock implements IServicioDoctorMock {
 	//String s = currentRelativePath.toAbsolutePath().toString();
         
         //Implementación STORMPATH
-        String s="C:\\Users\\template\\Documents\\proyectoSeguridad\\Servicios\\src\\main\\webapp\\WEB-INF\\apiKey-4Q4FXMVW3LPNYYFXEX4A7J3S7.properties";
+        String s="src\\main\\webapp\\WEB-INF\\apiKey-4Q4FXMVW3LPNYYFXEX4A7J3S7.properties";
         ApiKey apiKey = ApiKeys.builder().setFileLocation(s).build();
         client = Clients.builder().setApiKey(apiKey).build();
         Tenant tenant = client.getCurrentTenant();

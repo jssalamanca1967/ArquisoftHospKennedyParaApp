@@ -47,5 +47,6 @@ public class PersistenceManager {
         if (DEBUG) {
             System.out.println("Persistence started at " + new java.util.Date());
         }
+        System.out.println("-----------------------------Persistence started at " + new java.util.Date());
     }
 } 

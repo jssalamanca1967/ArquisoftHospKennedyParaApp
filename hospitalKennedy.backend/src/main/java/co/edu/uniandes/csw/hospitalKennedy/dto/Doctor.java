@@ -57,6 +57,8 @@ public class Doctor implements Serializable{
     private String nombre;
     private String password;
     private String login;
+    private String grupo;
+    private String token;
     
     public Doctor(Long id, String pNombre, String pPsw, String pLogin){
         this.id = id;
@@ -110,6 +112,23 @@ public class Doctor implements Serializable{
     public String getLogin() {
         return login;
     }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+    
     
     
 }
