@@ -5,8 +5,12 @@
  */
 package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
+import co.edu.uniandes.csw.hospitalKennedy.dto.Doctor;
+import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
+import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioPacienteMock;
 import co.edu.uniandes.hospitalkennedy.security.jwt.api.JsonWebToken;
 import co.edu.uniandes.hospitalkennedy.security.jwt.api.JwtHashAlgorithm;
+import co.edu.uniandes.hospitalkennedy.security.logic.dto.PathInfo;
 import co.edu.uniandes.hospitalkennedy.security.logic.dto.UserDTO;
 import com.google.gson.Gson;
 import com.stormpath.sdk.account.Account;
@@ -49,6 +53,8 @@ public class UserLoginService {
         String path = "src\\main\\webapp\\WEB-INF\\apiKey-4Q4FXMVW3LPNYYFXEX4A7J3S7.properties";//Colocar la Ubicacion de su archivo apiKey.properties
         ApiKey apiKey = ApiKeys.builder().setFileLocation(path).build();
         Client client = Clients.builder().setApiKey(apiKey).build();
+        Paciente paciente;
+        Doctor doctor;
 
         try {
             AuthenticationRequest request = new UsernamePasswordRequest(user.getUsername(), user.getPassword());
@@ -74,14 +80,33 @@ public class UserLoginService {
             token = new Gson().toJson(JsonWebToken.encode(userStorm, "Un14nd3s2014@", JwtHashAlgorithm.HS256));
             status = 200;
             
+            if(userStorm.getGrupo().equals(PathInfo.PACIENTE)){
+            
+                paciente = new Paciente();
+                paciente.setGrupo( userStorm.getGrupo());
+                paciente.setNombre( userStorm.getUsername() );
+                paciente.setPassword( userStorm.getPassword() );
+
+                return Response.status(status).entity(paciente).build();
+            }
+            if(userStorm.getGrupo().equals(PathInfo.DOCTOR)){
+                
+                doctor = new Doctor();
+                
+                doctor.setNombre(userStorm.getUsername());
+                doctor.setPassword(userStorm.getPassword());
+                doctor.setGrupo(userStorm.getGrupo());
+                doctor.setToken(token);
+                
+                return Response.status(status).entity(doctor).build();
+            }
+            else
+                return Response.status(400).entity("User and/or password wrong").build();
             
 
         } catch (ResourceException ex) {
             status = 400;
             
-            token = ex.getMessage();
-        }
-        finally{
             return Response.status(status).entity(token).build();
         }
 

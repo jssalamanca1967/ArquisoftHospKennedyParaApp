@@ -327,14 +327,14 @@ public class PacienteService {
     // Método para la app
     //--------------------------------------------------
     
-    @GET
+    @POST
     @Path("/darId")
     /**
      * Recibe el nombre por parámetro y retorna un PacienteDTO con el valor de la cédula del paciente
      */
-    public Response darId(PacienteDTO paciente){
+    public Response darId(Paciente paciente){
         
-        PacienteDTO r = servicioPaciente.darPacientePorNombre(paciente);
+        Paciente r = servicioPaciente.darPacientePorNombre(paciente);
         Response.status(200).header("Access-Control-Allow-Methods", "*").entity(r).build();
         Response.status(200).header("Access-Control-Allow-Headers", "*").entity(r).build();
         Response.status(200).header("Access-Control-Allow-Credentials", "true").entity(r).build();

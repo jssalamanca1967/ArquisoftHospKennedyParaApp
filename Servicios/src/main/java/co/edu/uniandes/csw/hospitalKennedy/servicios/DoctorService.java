@@ -6,14 +6,21 @@
 package co.edu.uniandes.csw.hospitalKennedy.servicios;
 
 import co.edu.uniandes.csw.hospitalKeneddy.PersistenceManager;
+import co.edu.uniandes.csw.hospitalKennedy.dto.Catalizador;
 import co.edu.uniandes.csw.hospitalKennedy.dto.DoctorDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Paciente;
 import co.edu.uniandes.csw.hospitalKennedy.dto.PacienteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.dto.Reporte;
+import co.edu.uniandes.csw.hospitalKennedy.dto.ReporteDTO;
 import co.edu.uniandes.csw.hospitalKennedy.logica.ejb.ServicioDoctorMock;
 import co.edu.uniandes.csw.hospitalKennedy.logica.interfaces.IServicioDoctorMock;
+import co.edu.uniandes.hospitalkennedy.security.logic.dto.PathInfo;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -164,6 +171,87 @@ public class DoctorService {
         Response.status(200).header("Access-Control-Allow-Credentials", "true").entity("").build();
 
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("").build();
+    }
+    
+    @GET
+    @Path("/pacientesPredeterminado")
+    public Response darPacientesPredeterminado(){
+        
+        List<Reporte> lista = new ArrayList<Reporte>();
+        
+        for(int i = 0; i < 100; i++){
+            Reporte reporte = new Reporte();
+            
+            String txtLocalizacion = "";
+            String txtGravedad = "";
+            String txtActividad = "";
+            String txtPatron = "";
+            String txtAlimentacion = "";
+            String txtMedicamento = "";
+            
+            if(i%3 == 0){
+                txtLocalizacion = "Toda la cabeza";
+                txtGravedad = "Alta";
+                txtActividad = "Estudio";
+                txtPatron = "Normal";
+                txtAlimentacion = "Sana";
+                txtMedicamento = "Ninguno";
+            }
+            if(i%3 == 1){
+                txtLocalizacion = "Parte inferior de la cabeza";
+                txtGravedad = "Media";
+                txtActividad = "Nada";
+                txtPatron = "Normal";
+                txtAlimentacion = "Comida chatarra";
+                txtMedicamento = "Nozidril 500gr";
+            }
+            if(i%3 == 2){
+                txtLocalizacion = "Las cienes";
+                txtGravedad = "Media";
+                txtActividad = "Nada";
+                txtPatron = "Normal";
+                txtAlimentacion = "Comida chatarra";
+                txtMedicamento = "Nozidril 500gr";
+            }
+            
+            reporte.setLocalizacionDolor(txtLocalizacion);
+            reporte.setGravedad(txtGravedad);
+            reporte.setAlimentacion(txtAlimentacion);
+            reporte.setPatronSuenio(txtPatron);
+            reporte.setActividadFisica(txtActividad);
+            reporte.setMedicamentosRecientes(txtMedicamento);
+            
+            reporte.setId(Long.parseLong(""+i));
+            
+            reporte.setCatalizadores(new Catalizador(Long.parseLong(""+i), txtActividad, txtAlimentacion, txtMedicamento, txtMedicamento));
+            
+            reporte.setFechaCreacion((new Date(System.currentTimeMillis()-10000000*i)).toString());
+            
+            lista.add(reporte);
+            
+        }
+        
+        List<Paciente> pacientes = new ArrayList<Paciente>();
+        
+        for(int i = 0; i < 100; i++){
+            
+            Paciente nuevo = new Paciente();
+            
+            nuevo.setId(Long.parseLong("" + i));
+            nuevo.setGrupo(PathInfo.PACIENTE);
+            nuevo.setNombre(i%5==0?"Laura":i%5==1?"Miguel":i%5==2?"Manuel":i%5==3?"Paola":"Mariana");
+            nuevo.reportes = new ArrayList<Reporte>();
+            nuevo.reportes.addAll(lista);
+            
+            pacientes.add(nuevo);
+            
+        }
+        
+        Response.status(200).header("Access-Control-Allow-Methods", "*").entity(pacientes).build();
+        Response.status(200).header("Access-Control-Allow-Headers", "*").entity(pacientes).build();
+        Response.status(200).header("Access-Control-Allow-Credentials", "true").entity(pacientes).build();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(pacientes).build();
+        
     }
 
 }
